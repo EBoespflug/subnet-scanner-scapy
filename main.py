@@ -8,7 +8,9 @@ banner = "Subnet scanner v1.0"
 
 def set_configs():
     """Returns a dictionnary corresponding to the configuration of the program depending on the specified arguments.
-    An argument parser is created to handle the different option and parameters."""
+    An argument parser is created to handle the different option and parameters.
+    @returns the configuration dictionnary.
+    """
     arg_parser = argparse.ArgumentParser(description=banner)
 
     arg_parser.add_argument("ip_ranges", nargs="+", help="The list of range of ip address to scan.")
@@ -43,13 +45,15 @@ def set_configs():
 
 def main():
     """Main function of the subnet scanner. Parse the argument, launches the scans and print the results."""
+    # Argument parsing.
     config = set_configs()
 
-    if config is None :
+    if config is None:
         return
-
     if config['verbosity'] < 2:
         conf.verb = 0
+
+    # Launch scans.
     start_time = time.time()
     if config['verbosity'] > 0:
         print "Starting subnet scan at " + datetime.datetime.fromtimestamp(int(start_time)).strftime('%Y-%m-%d %H:%M:%S')
@@ -63,6 +67,7 @@ def main():
     if not config['no-sort']:
         hosts = sorted(hosts, key=lambda h: h.ip)
 
+    # Print results.
     elapsed = time.time() - start_time
     print "Subnet scan done on [" + ", ".join(config['ip_ranges']) + "] in %.2f seconds." % elapsed
 
@@ -72,7 +77,10 @@ def main():
         print_hosts(hosts, config)
 
 def remove_duplicates(hosts):
-    """Remove the duplicate of an hosts list. The hosts correspond to a list of Host."""
+    """
+    Removes the duplicate of an hosts list. The hosts correspond to a list of Host.
+    @param hosts    a list of hosts in which the duplicate will be removed.
+    """
     dic = {}
     for host in hosts:
         if not host.ip in dic:
@@ -84,8 +92,13 @@ def remove_duplicates(hosts):
 
     return new_hosts
 
+
 def print_hosts(hosts, config):
-    """Print the detected alive hosts."""
+    """
+    Print the detected alive hosts.
+    @param hosts    a list of result Hosts.
+    @param config   the configuration dictionnary.
+    """
     print "Hosts : "
     max_ipstr_len = 15
     max_macstr_len = 17
@@ -100,8 +113,12 @@ def print_hosts(hosts, config):
 
         print line
 
+
 def prettyprint_hosts(hosts):
-    """Print a list of Hosts using a table."""
+    """
+    Print a list of Hosts using a table.
+    @param hosts    a list of result Hosts.
+    """
     max_ipstr_len = 15
     max_macstr_len = 17
     max_namestr_len = 25

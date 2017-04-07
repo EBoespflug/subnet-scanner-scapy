@@ -7,9 +7,11 @@ import time, datetime, argparse
 banner = "Subnet scanner v1.0"
 
 def set_configs():
+    """Returns a dictionnary corresponding to the configuration of the program depending on the specified arguments.
+    An argument parser is created to handle the different option and parameters."""
     arg_parser = argparse.ArgumentParser(description=banner)
 
-    arg_parser.add_argument("ip_ranges", nargs="+", help="The range of ip address to scan.")
+    arg_parser.add_argument("ip_ranges", nargs="+", help="The list of range of ip address to scan.")
     arg_parser.add_argument("-t", "--timeout", type=int, default=2, help="Timeout for each port scan. Default = 2.")
     arg_parser.add_argument("-v", "--verbose", action='store_true', help="Set the verbosity level to 'verbose'. In verbose mode, all scapy output are activated.")
     arg_parser.add_argument("-q", "--quiet", action='store_true', help="Set the verbosity level to 'quiet'. In quiet mode, only the result are displayed.")
@@ -40,7 +42,7 @@ def set_configs():
     }
 
 def main():
-
+    """Main function of the subnet scanner. Parse the argument, launches the scans and print the results."""
     config = set_configs()
 
     if config is None :
@@ -62,7 +64,7 @@ def main():
         hosts = sorted(hosts, key=lambda h: h.ip)
 
     elapsed = time.time() - start_time
-    print "Scan done in %.2f sec." % elapsed
+    print "Subnet scan done on [" + ", ".join(config['ip_ranges']) + "] in %.2f seconds." % elapsed
 
     if config['table-results']:
         prettyprint_hosts(hosts)
@@ -70,6 +72,7 @@ def main():
         print_hosts(hosts, config)
 
 def remove_duplicates(hosts):
+    """Remove the duplicate of an hosts list. The hosts correspond to a list of Host."""
     dic = {}
     for host in hosts:
         if not host.ip in dic:
@@ -82,7 +85,7 @@ def remove_duplicates(hosts):
     return new_hosts
 
 def print_hosts(hosts, config):
-    print "Subnets : " + ",".join(config['ip_ranges']) + "."
+    """Print the detected alive hosts."""
     print "Hosts : "
     max_ipstr_len = 15
     max_macstr_len = 17
@@ -98,11 +101,12 @@ def print_hosts(hosts, config):
         print line
 
 def prettyprint_hosts(hosts):
+    """Print a list of Hosts using a table."""
     max_ipstr_len = 15
     max_macstr_len = 17
     max_namestr_len = 25
     print "/----------------------------------------------------------------\\"
-    print "|-----------------------[ Subnet scan result---------------------|"
+    print "|-----------------------[ Subnet scan result]--------------------|"
     print "|----------------------------------------------------------------|"
     print "|   ip address    |    mac address    |         host name        |"
     print "|----------------------------------------------------------------|"

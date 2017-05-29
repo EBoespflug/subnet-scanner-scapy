@@ -11,7 +11,7 @@ def resolve_host_name(ip):
     except socket.herror: pass # ignore. Nothing to do.
 
     hostname = "unknown" # default host name.
-    if results != "":
+    if results != "" and results != []:
         hostname = results[0] # keep only the host name.
     return hostname
 

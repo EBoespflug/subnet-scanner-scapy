@@ -1,3 +1,12 @@
+# Etienne BOESPFLUG - 2017
+#
+# Host.py - https://github.com/EBoespflug/subnet-scanner-scapy/
+#
+# This project is part of the public domain.
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE.
+
 class Host:
     """The Host class represent an host on the network.
     It is composed by it's name and it's addresses (IP & MAC)."""

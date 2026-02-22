@@ -3,11 +3,11 @@
 ## Overview
 This tool is a ***command-line subnet scanner using Scapy***.
 
-It proceed to an ARP scan to check if each host is alive in the specified ip-range. The host-name is resolved if possible.
+It proceeds to an ARP scan to check if each host is alive in the specified ip-range. The host-name is resolved if possible.
 
 ## Installation and Dependencies
 
-This tool is written with **Python 2** and so require a Python 2 interpreter.
+This tool is written with **Python 2** and so requires a Python 2 interpreter.
 
 It also relies on the **Scapy** program, please visit [the official Scapy's website](http://www.secdev.org/projects/scapy/) for installation instructions.
 
